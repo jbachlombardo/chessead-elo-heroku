@@ -5,7 +5,7 @@ Heroku deployment of Chessead Elo ranking app with Google Sheets API integration
 Script to read / write sheet: 
 - input: game results reported through Google Form
 - process: calculating new Elo rankings
-- output: write updated Elo rankings to back Google Sheet and update front page with clean, ordered rankings
+- output: write updated Elo rankings to secondary Google Sheet and update front page with clean, ordered rankings
 
 #### clock.py
 Scheduler deployed to Heroku
@@ -14,4 +14,4 @@ Scheduler deployed to Heroku
 Dependencies for Heroku
 
 #### Procfile
-clock dyno deploy
+Clock dyno deploy
