@@ -8,7 +8,7 @@ Script to read / write to sheet
 Scheduler deployed to Heroku
 
 ### requirements.txt
-Dependencies for Heroku environment
+Dependencies for Heroku
 
 ### Procfile
 clock dyno deploy
