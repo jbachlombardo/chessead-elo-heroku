@@ -1,0 +1,6 @@
+pandas==0.24.1
+numpy==1.16.2
+gspread==3.2.0
+oauth2client
+datetime
+APScheduler==3.6.3
