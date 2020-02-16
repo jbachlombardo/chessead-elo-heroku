@@ -83,7 +83,7 @@ updates = {}
 
 if len(current) > 0 : # Only run if players already in system
     for p in did_not_play :
-        updates[p] = current_elo = current.loc[current['Name'] == p, 'Elo'].item()
+        updates[p] = current.loc[current['Name'] == p, 'Elo'].item()
 
 for p in played_game :
     if p in current['Name'].to_list() :
