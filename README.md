@@ -1,5 +1,5 @@
 # chessead-elo-heroku
-Heroku deployment of Chessead Elo ranking app with Google Sheets API integration
+Heroku deployment of Chessead Elo ranking app with Google Sheets API integration. <a href="https://jbachlombardo.wordpress.com/2020/02/26/heroku-the-google-sheets-api-deploying-chesseads-elo-calculator/">Brief writeup here.</a>
 
 #### chessead_elo_sheets.py
 Script to read / write sheet: 
