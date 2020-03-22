@@ -4,7 +4,7 @@ Heroku deployment of Chessead Elo ranking app with Google Sheets API integration
 #### chessead_elo_sheets.py
 Script to read / write sheet: 
 - input: game results reported through Google Form
-- process: calculating new Elo rankings
+- process: calculating new Elo rankings (new players given an initial ranking of 1000)
 - output: write updated Elo rankings to secondary Google Sheet and update front page with clean, ordered rankings
 
 #### clock.py
