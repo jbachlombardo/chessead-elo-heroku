@@ -10,7 +10,7 @@ Script to read / write sheet:
 - output: write updated Elo rankings to secondary Google Sheet and update front page with clean, ordered rankings
 
 #### clock.py
-Scheduler deployed to Heroku
+Scheduler deployed to Heroku (runs 2x per week, on Wednesdays and Sundays)
 
 #### requirements.txt
 Dependencies for Heroku
