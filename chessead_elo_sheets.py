@@ -31,7 +31,8 @@ def calculate_elo(player, results_df, current_elo_df, new_player = False, starti
     score = personal_results['Result01'].sum()
     expected_score = personal_results['E_Result01'].sum()
     new_elo = round(current_elo + (k * (score - expected_score)))
-    return new_elo
+    n_games = len(personal_results)
+    return new_elo, n_games
 
 # ----- Authorize access -----
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
@@ -91,21 +92,29 @@ for p in played_game :
     else :
         updates[p] = calculate_elo(p, results, current, new_player = True)
 
-updated_elos = pd.DataFrame.from_dict(updates, orient = 'index').reset_index().rename(columns = {'index': 'Name', 0: 'Elo'})
+updated_elos = pd.DataFrame.from_dict(updates, orient = 'index').reset_index().rename(columns = {'index': 'Name', 0: 'Elo', 1: 'Games played'})
 updated_elos['Last update'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+
+for player in updated_elos['Name'] :
+    if player in current['Name'].to_list() :
+        current.loc[current['Name'] == player, 'Elo'] = updated_elos.loc[updated_elos['Name'] == player, 'Elo'].item()
+        current.loc[current['Name'] == player, 'Games played'] += updated_elos.loc[updated_elos['Name'] == player, 'Games played'].item()
+    else :
+        current = current.append(updated_elos.loc[updated_elos['Name'] == player])
 
 # ----- Remove old Elo sheet, create new sheet for updated Elos -----
 elo_gsheet.del_worksheet(current_sheet)
 new_current_sheet = elo_gsheet.add_worksheet('INSEAD Elo rankings', rows = len(updated_elos), cols = 10)
-new_current_sheet.insert_row(list(updated_elos.columns), 1)
+new_current_sheet.insert_row(list(current.columns), 1)
 row_num = 2
-for i, row in updated_elos.sort_values(by = 'Elo', ascending = False).iterrows() :
+for i, row in current.sort_values(by = 'Elo', ascending = False).iterrows() :
     new_current_sheet.insert_row(list(row), row_num)
     row_num += 1
 
 # ----- Redo Elo frontpage -----
 inseadelo = elo_gsheet.worksheet('INSEADElo')
-for n in np.arange(2, len(updated_elos) + 2) :
+for n in np.arange(2, len(current) + 2) :
     inseadelo.update_acell('A{}'.format(n), '=if(isnumber(C{}),RANK(C{},C:C),"")'.format(n, n))
     inseadelo.update_acell('B{}'.format(n), "='INSEAD Elo rankings'!A{}".format(n, n))
     inseadelo.update_acell('C{}'.format(n), "='INSEAD Elo rankings'!B{}".format(n, n))
+    inseadelo.update_acell('D{}'.format(n), "='INSEAD Elo rankings'!C{}".format(n, n))
