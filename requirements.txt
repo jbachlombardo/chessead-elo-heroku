@@ -1,5 +1,5 @@
 pandas==0.24.1
-numpy==1.16.2
+numpy==1.22.0
 gspread==3.2.0
 oauth2client
 datetime
